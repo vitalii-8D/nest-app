@@ -8,18 +8,18 @@ import {
 } from 'class-validator';
 
 export class CreateArticleDto {
-  @ApiProperty()
   @IsString()
   @MinLength(5)
+  @ApiProperty({ default: 'Post Title 1' })
   title: string;
 
   @IsString()
   @MaxLength(300)
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, default: 'very long description' })
   description?: string;
 
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ default: 'body body body body body body body' })
   body: string;
 
   @IsBoolean()
