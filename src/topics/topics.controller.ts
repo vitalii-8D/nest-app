@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
@@ -33,19 +34,22 @@ export class TopicsController {
 
   @ApiOkResponse({ type: TopicEntity })
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: string) {
     return this.topicsService.findOne(+id);
   }
 
   @ApiOkResponse({ type: TopicEntity })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTopicDto: UpdateTopicDto) {
-    return this.topicsService.update(+id, updateTopicDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateTopicDto: UpdateTopicDto,
+  ) {
+    return this.topicsService.update(id, updateTopicDto);
   }
 
   @ApiOkResponse({ type: TopicEntity })
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.topicsService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.topicsService.remove(id);
   }
 }
