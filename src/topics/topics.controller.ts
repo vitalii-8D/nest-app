@@ -34,8 +34,8 @@ export class TopicsController {
 
   @ApiOkResponse({ type: TopicEntity })
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: string) {
-    return this.topicsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.topicsService.findOne(id);
   }
 
   @ApiOkResponse({ type: TopicEntity })
@@ -49,7 +49,7 @@ export class TopicsController {
 
   @ApiOkResponse({ type: TopicEntity })
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.topicsService.remove(id);
   }
 }

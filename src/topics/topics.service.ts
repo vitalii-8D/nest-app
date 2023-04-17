@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTopicDto } from './dto/create-topic.dto';
 import { UpdateTopicDto } from './dto/update-topic.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -15,14 +15,26 @@ export class TopicsService {
   }
 
   findOne(id: number) {
-    return this.prisma.topic.findUnique({ where: { id } });
+    const topic = this.prisma.topic.findUnique({ where: { id } });
+    if (!topic) throw new NotFoundException('Topic not found');
+
+    return topic;
   }
 
   update(id: number, updateTopicDto: UpdateTopicDto) {
-    return this.prisma.topic.update({ where: { id }, data: updateTopicDto });
+    const topic = this.prisma.topic.update({
+      where: { id },
+      data: updateTopicDto,
+    });
+    if (!topic) throw new NotFoundException('Topic not found');
+
+    return topic;
   }
 
   remove(id: number) {
-    return this.prisma.topic.delete({ where: { id } });
+    const topic = this.prisma.topic.delete({ where: { id } });
+    if (!topic) throw new NotFoundException('Topic not found');
+
+    return topic;
   }
 }
