@@ -11,40 +11,52 @@ datasource db {
 }
 
 model Topic {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique
-  courses Course[]
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  courses   Course[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deleted   DateTime?
 }
 
 model Course {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
   description String
   topics      Topic[]
-  students    User[]  @relation("CourseStudents")
-  lector      User    @relation("LectorCourses", fields: [lectorId], references: [id])
+  students    User[]    @relation("CourseStudents")
+  lector      User      @relation("LectorCourses", fields: [lectorId], references: [id])
   lectorId    Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deleted     DateTime?
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   firstName String
   lastName  String
-  email     String   @unique
+  email     String    @unique
   password  String
-  role      UserRole @default(STUDENT)
+  role      UserRole  @default(STUDENT)
   profile   Profile?
-  course    Course?  @relation("CourseStudents", fields: [courseId], references: [id])
+  course    Course?   @relation("CourseStudents", fields: [courseId], references: [id])
   courseId  Int?
-  courses   Course[] @relation("LectorCourses")
+  courses   Course[]  @relation("LectorCourses")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deleted   DateTime?
 }
 
 model Profile {
-  id     Int     @id @default(autoincrement())
-  photo  String?
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  id        Int       @id @default(autoincrement())
+  photo     String?
+  bio       String?
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int       @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deleted   DateTime?
 }
 
 enum UserRole {
