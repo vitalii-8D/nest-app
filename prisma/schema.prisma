@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["extendedWhereUnique"]
 }
 
 datasource db {
@@ -16,7 +17,7 @@ model Topic {
   courses   Course[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  deleted   DateTime?
+  deletedAt DateTime?
 }
 
 model Course {
@@ -29,7 +30,7 @@ model Course {
   lectorId    Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  deleted     DateTime?
+  deletedAt   DateTime?
 }
 
 model User {
@@ -45,7 +46,7 @@ model User {
   courses   Course[]  @relation("LectorCourses")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  deleted   DateTime?
+  deletedAt DateTime?
 }
 
 model Profile {
@@ -56,7 +57,7 @@ model Profile {
   userId    Int       @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  deleted   DateTime?
+  deletedAt DateTime?
 }
 
 enum UserRole {

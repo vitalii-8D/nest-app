@@ -14,27 +14,21 @@ export class TopicsService {
     return this.prisma.topic.findMany({});
   }
 
-  findOne(id: number) {
-    const topic = this.prisma.topic.findUnique({ where: { id } });
+  async findOne(id: number) {
+    const topic = await this.prisma.topic.findUnique({ where: { id } });
     if (!topic) throw new NotFoundException('Topic not found');
 
     return topic;
   }
 
-  update(id: number, updateTopicDto: UpdateTopicDto) {
-    const topic = this.prisma.topic.update({
+  async update(id: number, updateTopicDto: UpdateTopicDto) {
+    return this.prisma.topic.update({
       where: { id },
       data: updateTopicDto,
     });
-    if (!topic) throw new NotFoundException('Topic not found');
-
-    return topic;
   }
 
-  remove(id: number) {
-    const topic = this.prisma.topic.delete({ where: { id } });
-    if (!topic) throw new NotFoundException('Topic not found');
-
-    return topic;
+  async remove(id: number) {
+    return this.prisma.topic.delete({ where: { id } });
   }
 }

@@ -11,5 +11,5 @@ export class TopicEntity implements Topic {
   @ApiProperty()
   updatedAt: Date;
   @ApiProperty({ required: false, nullable: true })
-  deleted: Date;
+  deletedAt: Date | null;
 }
