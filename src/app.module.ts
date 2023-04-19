@@ -3,7 +3,7 @@ import { TopicsModule } from './topics/topics.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaModule as NestPrismaModule } from 'nestjs-prisma';
 import { UserModule } from './user/user.module';
-import { PostsModule } from './posts/posts.module';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [
@@ -11,7 +11,7 @@ import { PostsModule } from './posts/posts.module';
     TopicsModule,
     NestPrismaModule.forRoot(),
     UserModule,
-    PostsModule,
+    CoursesModule,
   ],
   controllers: [],
   providers: [],

@@ -26,8 +26,8 @@ model Course {
   description String
   topics      Topic[]
   students    User[]    @relation("CourseStudents")
-  lector      User      @relation("LectorCourses", fields: [lectorId], references: [id])
-  lectorId    Int
+  lector      User?     @relation("LectorCourses", fields: [lectorId], references: [id])
+  lectorId    Int?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime?

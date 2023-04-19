@@ -53,6 +53,12 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         }
       }
 
+      // const result = await next(params);
+      // Works
+      // if (params.model == 'User') {
+      //   result.name = `${result.firstName} ${result.lastName}`;
+      // }
+
       return next(params);
     });
   }

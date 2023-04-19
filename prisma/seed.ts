@@ -55,7 +55,7 @@ async function main() {
     {
       id: 2,
       name: 'React advanced course',
-      description: faker.random.words(20),
+      description: faker.random.words(10),
       topics: [2, 7],
       lector: 2,
       students: [],
