@@ -1,5 +1,6 @@
 import { PrismaClient, UserRole } from '@prisma/client';
 import { faker } from '@faker-js/faker';
+import argon2 = require('argon2');
 
 const prisma = new PrismaClient();
 
@@ -16,13 +17,15 @@ async function main() {
     { id: 9, name: 'Docker' },
   ];
 
+  const userPass = await argon2.hash('pass' + process.env.PASS_SECRET);
+
   const users = [
     {
       id: 1,
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
-      password: faker.internet.password(),
+      password: userPass,
       role: UserRole.STUDENT,
     },
     {
@@ -30,7 +33,7 @@ async function main() {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
-      password: faker.internet.password(),
+      password: userPass,
       role: UserRole.LECTOR,
     },
     {
@@ -38,7 +41,7 @@ async function main() {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
-      password: faker.internet.password(),
+      password: userPass,
       role: UserRole.ADMIN,
     },
   ];

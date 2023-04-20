@@ -7,14 +7,29 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { TopicsService } from './topics.service';
 import { CreateTopicDto } from './dto/create-topic.dto';
 import { UpdateTopicDto } from './dto/update-topic.dto';
 import { TopicEntity } from './entities/topic.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Roles } from '../auth/decorators/role.decorator';
+import { AUTH_ROLES } from '../auth/constants/role-keys.constant';
+import { User } from '../decorators/user.decorator';
+import { UserEntity } from '../user/entities/user.entity';
 
+// @UseGuards(AuthGuard('jwt'))
+@Roles(AUTH_ROLES.LECTOR)
+@ApiBearerAuth('access-token')
+@UseGuards(JwtAuthGuard)
 @ApiTags('topics')
 @Controller('topics')
 export class TopicsController {
@@ -26,9 +41,10 @@ export class TopicsController {
     return this.topicsService.create(createTopicDto);
   }
 
+  @Roles()
   @ApiOkResponse({ type: TopicEntity, isArray: true })
   @Get()
-  findAll() {
+  findAll(@User() user: UserEntity) {
     return this.topicsService.findAll();
   }
 

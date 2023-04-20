@@ -4,6 +4,9 @@ import { PrismaModule } from './prisma/prisma.module';
 import { PrismaModule as NestPrismaModule } from 'nestjs-prisma';
 import { UserModule } from './user/user.module';
 import { CoursesModule } from './courses/courses.module';
+import { AuthModule } from './auth/auth.module';
+import { HashService } from './helpers/hash.service';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -12,8 +15,9 @@ import { CoursesModule } from './courses/courses.module';
     NestPrismaModule.forRoot(),
     UserModule,
     CoursesModule,
+    AuthModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [HashService],
 })
 export class AppModule {}

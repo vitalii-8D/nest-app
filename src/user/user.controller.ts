@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
+import { QueryUserDto } from './dto/query-user.dto';
 
 @ApiTags('users')
 @Controller('user')
@@ -27,8 +29,8 @@ export class UserController {
 
   @ApiOkResponse({ type: UserEntity, isArray: true })
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  findAll(@Query() query: QueryUserDto) {
+    return this.userService.findAll(query);
   }
 
   @ApiOkResponse({ type: UserEntity })

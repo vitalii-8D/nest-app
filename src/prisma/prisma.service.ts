@@ -53,13 +53,15 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         }
       }
 
-      // const result = await next(params);
+      // const PASSWORD_MASK = '********';
+      const result = await next(params);
       // Works
-      // if (params.model == 'User') {
-      //   result.name = `${result.firstName} ${result.lastName}`;
-      // }
+      if (params.model == 'User') {
+        // result.name = `${result.firstName} ${result.lastName}`;
+        // result.password = PASSWORD_MASK;
+      }
 
-      return next(params);
+      return result;
     });
   }
 
