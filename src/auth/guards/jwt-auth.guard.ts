@@ -43,8 +43,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   handleRequest(err, user, info) {
-    console.log(JSON.stringify(user, null, 2));
-
     if (err || !user) {
       throw err || info;
     }

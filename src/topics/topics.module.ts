@@ -3,10 +3,11 @@ import { TopicsService } from './topics.service';
 import { TopicsController } from './topics.controller';
 import { PrismaModule } from '../prisma/prisma.module';
 import { AuthModule } from '../auth/auth.module';
+import { ConfigModule } from '../config/config.module';
 
 @Module({
   controllers: [TopicsController],
   providers: [TopicsService],
-  imports: [PrismaModule, AuthModule],
+  imports: [ConfigModule, PrismaModule, AuthModule],
 })
 export class TopicsModule {}
