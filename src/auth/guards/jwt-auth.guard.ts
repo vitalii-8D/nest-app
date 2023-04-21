@@ -1,4 +1,8 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
 
@@ -16,6 +20,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       ROLES_KEY,
       [context.getHandler(), context.getClass()],
     );
+
     if (!roles || !roles.length) {
       return true;
     }
@@ -24,7 +29,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     try {
       isAuthenticate = await super.canActivate(context);
     } catch (err) {
-      return false;
+      throw new UnauthorizedException(err.message);
     }
 
     if (!isAuthenticate) {
@@ -34,12 +39,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const { role = '' } = context.switchToHttp().getRequest()
       ?.user as UserEntity;
 
-    if (roles.includes(AUTH_ROLES.ALL) || roles.includes(role)) {
-      return true;
-    }
-
-    return false;
-    // return super.canActivate(context);
+    return roles.includes(AUTH_ROLES.ALL) || roles.includes(role);
   }
 
   handleRequest(err, user, info) {

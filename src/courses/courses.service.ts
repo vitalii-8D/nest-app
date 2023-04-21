@@ -62,4 +62,13 @@ export class CoursesService {
   remove(id: number) {
     return this.prisma.course.delete({ where: { id } });
   }
+
+  attachLector(courseId: number, lectorId: number) {
+    return this.prisma.course.update({
+      where: { id: courseId },
+      data: {
+        lector: { connect: { id: lectorId } },
+      },
+    });
+  }
 }

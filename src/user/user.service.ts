@@ -42,4 +42,15 @@ export class UserService {
   remove(id: number) {
     return this.prisma.user.delete({ where: { id } });
   }
+
+  enterCourse(userId: number, courseId: number) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        course: {
+          connect: { id: courseId },
+        },
+      },
+    });
+  }
 }

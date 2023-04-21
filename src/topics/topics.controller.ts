@@ -23,11 +23,8 @@ import { TopicEntity } from './entities/topic.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/role.decorator';
 import { AUTH_ROLES } from '../auth/constants/role-keys.constant';
-import { User } from '../decorators/user.decorator';
-import { UserEntity } from '../user/entities/user.entity';
 
-// @UseGuards(AuthGuard('jwt'))
-@Roles(AUTH_ROLES.LECTOR)
+@Roles(AUTH_ROLES.ALL)
 @ApiBearerAuth('access-token')
 @UseGuards(JwtAuthGuard)
 @ApiTags('topics')
@@ -41,10 +38,9 @@ export class TopicsController {
     return this.topicsService.create(createTopicDto);
   }
 
-  @Roles()
   @ApiOkResponse({ type: TopicEntity, isArray: true })
   @Get()
-  findAll(@User() user: UserEntity) {
+  findAll() {
     return this.topicsService.findAll();
   }
 
