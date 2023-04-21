@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -15,6 +16,7 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 import { TopicsService } from './topics.service';
 import { CreateTopicDto } from './dto/create-topic.dto';
@@ -38,6 +40,8 @@ export class TopicsController {
     return this.topicsService.create(createTopicDto);
   }
 
+  // Implements cache to handler
+  @UseInterceptors(CacheInterceptor)
   @ApiOkResponse({ type: TopicEntity, isArray: true })
   @Get()
   findAll() {

@@ -8,12 +8,17 @@ import { AuthModule } from './auth/auth.module';
 import { HashService } from './helpers/hash.service';
 import { AppController } from './app.controller';
 import { ConfigModule } from './config/config.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
     ConfigModule.register({
       folder: 'env',
       env: process.env.NODE_ENV || 'development',
+    }),
+    CacheModule.register({
+      ttl: 8 * 1000, // milliseconds
+      isGlobal: true,
     }),
     PrismaModule,
     TopicsModule,
@@ -23,6 +28,13 @@ import { ConfigModule } from './config/config.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [HashService],
+  providers: [
+    HashService,
+    // Apply cache to all routes
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: CacheInterceptor,
+    // },
+  ],
 })
 export class AppModule {}

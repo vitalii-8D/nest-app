@@ -18,13 +18,9 @@ export class ConfigService {
     const envFile = path.resolve(process.cwd(), options.folder, filePath);
     this.envConfig = dotenv.parse(fs.readFileSync(envFile));
     console.log(this.envConfig);
-    // const filePath = `development.env`;
-    // const envFile = path.resolve(process.cwd(), 'env', filePath);
-    // this.envConfig = dotenv.parse(fs.readFileSync(envFile));
   }
 
   get(key: string): string {
-    console.log('Get.log');
     return this.envConfig[key];
   }
 }

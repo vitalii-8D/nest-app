@@ -11,7 +11,12 @@ export class TopicsService {
   }
 
   findAll() {
-    return this.prisma.topic.findMany({});
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this.prisma.topic.findMany({}));
+      }, 5000);
+    });
+    // return this.prisma.topic.findMany({});
   }
 
   async findOne(id: number) {
